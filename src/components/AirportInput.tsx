@@ -32,7 +32,8 @@ export default function AirportInput({ label, value, onChange, placeholder }: Pr
 
     debounce.current = setTimeout(async () => {
       setLoading(true)
-      const { data } = await supabase.rpc('search_airports', { q: query })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data } = await (supabase.rpc as any)('search_airports', { q: query })
       setResults((data as Airport[]) ?? [])
       setOpen(true)
       setLoading(false)
