@@ -45,42 +45,84 @@ export type Database = {
       flights_travels: {
         Row: {
           cabin_class: string | null
+          context_text: string | null
           created_at: string
           depart_date: string | null
+          duration_max_days: number | null
+          duration_min_days: number | null
+          extracted_policy: Json | null
           from: string | null
           id: string
           max_stops: string | null
+          monitor_enabled: boolean
+          outbound_max_duration_minutes: number | null
+          outbound_max_stops: string | null
           passengers: number | null
+          preferred_airlines: string[] | null
           return_date: string | null
+          return_from: string | null
+          return_max_stops: string | null
+          return_to: string | null
+          title: string | null
           to: string | null
           updated_at: string | null
           user_id: string | null
+          window_end: string | null
+          window_start: string | null
         }
         Insert: {
           cabin_class?: string | null
+          context_text?: string | null
           created_at?: string
           depart_date?: string | null
+          duration_max_days?: number | null
+          duration_min_days?: number | null
+          extracted_policy?: Json | null
           from?: string | null
           id?: string
           max_stops?: string | null
+          monitor_enabled?: boolean
+          outbound_max_duration_minutes?: number | null
+          outbound_max_stops?: string | null
           passengers?: number | null
+          preferred_airlines?: string[] | null
           return_date?: string | null
+          return_from?: string | null
+          return_max_stops?: string | null
+          return_to?: string | null
+          title?: string | null
           to?: string | null
           updated_at?: string | null
           user_id?: string | null
+          window_end?: string | null
+          window_start?: string | null
         }
         Update: {
           cabin_class?: string | null
+          context_text?: string | null
           created_at?: string
           depart_date?: string | null
+          duration_max_days?: number | null
+          duration_min_days?: number | null
+          extracted_policy?: Json | null
           from?: string | null
           id?: string
           max_stops?: string | null
+          monitor_enabled?: boolean
+          outbound_max_duration_minutes?: number | null
+          outbound_max_stops?: string | null
           passengers?: number | null
+          preferred_airlines?: string[] | null
           return_date?: string | null
+          return_from?: string | null
+          return_max_stops?: string | null
+          return_to?: string | null
+          title?: string | null
           to?: string | null
           updated_at?: string | null
           user_id?: string | null
+          window_end?: string | null
+          window_start?: string | null
         }
         Relationships: []
       }
@@ -99,7 +141,11 @@ export type Database = {
           return_legs: Json | null
           return_price: number | null
           return_stops: number | null
+          run_id: string | null
+          score: number | null
+          score_reasons: Json | null
           searched_at: string
+          total_price: number | null
           travel_id: string
         }
         Insert: {
@@ -116,7 +162,11 @@ export type Database = {
           return_legs?: Json | null
           return_price?: number | null
           return_stops?: number | null
+          run_id?: string | null
+          score?: number | null
+          score_reasons?: Json | null
           searched_at?: string
+          total_price?: number | null
           travel_id: string
         }
         Update: {
@@ -133,7 +183,80 @@ export type Database = {
           return_legs?: Json | null
           return_price?: number | null
           return_stops?: number | null
+          run_id?: string | null
+          score?: number | null
+          score_reasons?: Json | null
           searched_at?: string
+          total_price?: number | null
+          travel_id?: string
+        }
+        Relationships: []
+      }
+      flights_search_runs: {
+        Row: {
+          best_score: number | null
+          best_total_price: number | null
+          combinations_found: number
+          dates_scanned: number
+          error: string | null
+          id: string
+          ran_at: string
+          status: string
+          travel_id: string
+        }
+        Insert: {
+          best_score?: number | null
+          best_total_price?: number | null
+          combinations_found?: number
+          dates_scanned?: number
+          error?: string | null
+          id?: string
+          ran_at?: string
+          status?: string
+          travel_id: string
+        }
+        Update: {
+          best_score?: number | null
+          best_total_price?: number | null
+          combinations_found?: number
+          dates_scanned?: number
+          error?: string | null
+          id?: string
+          ran_at?: string
+          status?: string
+          travel_id?: string
+        }
+        Relationships: []
+      }
+      flights_insights: {
+        Row: {
+          briefing: string
+          created_at: string
+          current_best_price: number | null
+          id: string
+          improved: boolean
+          previous_best_price: number | null
+          run_id: string | null
+          travel_id: string
+        }
+        Insert: {
+          briefing: string
+          created_at?: string
+          current_best_price?: number | null
+          id?: string
+          improved?: boolean
+          previous_best_price?: number | null
+          run_id?: string | null
+          travel_id: string
+        }
+        Update: {
+          briefing?: string
+          created_at?: string
+          current_best_price?: number | null
+          id?: string
+          improved?: boolean
+          previous_best_price?: number | null
+          run_id?: string | null
           travel_id?: string
         }
         Relationships: []

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { X, Save, Clock, ArrowRight } from 'lucide-react'
 import type { SearchFlightsResponse, FlightOption, FlightLeg } from '../types'
+import { airportLabel } from '../lib/airportLabel'
 
 interface Props {
   data: SearchFlightsResponse
@@ -32,9 +33,9 @@ export default function SearchResultsModal({ data, onSave, onClose, formatDurati
         <div key={i} className="sfc-leg">
           <span className="leg-airline">{leg.airline} {leg.flight_number}</span>
           <div className="leg-route">
-            <span>{leg.departure_airport.split(' ')[0]}</span>
+            <span>{airportLabel(leg.departure_airport)}</span>
             <ArrowRight size={11} />
-            <span>{leg.arrival_airport.split(' ')[0]}</span>
+            <span>{airportLabel(leg.arrival_airport)}</span>
           </div>
           <span className="leg-time">{formatDT(leg.departure_datetime)} → {formatDT(leg.arrival_datetime)}</span>
         </div>

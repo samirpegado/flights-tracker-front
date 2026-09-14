@@ -34,7 +34,10 @@ export default function Travels() {
     const q = search.toLowerCase()
     setFiltered(travels.filter(t =>
       (t.from ?? '').toLowerCase().includes(q) ||
-      (t.to ?? '').toLowerCase().includes(q)
+      (t.to ?? '').toLowerCase().includes(q) ||
+      (t.return_from ?? '').toLowerCase().includes(q) ||
+      (t.return_to ?? '').toLowerCase().includes(q) ||
+      (t.title ?? '').toLowerCase().includes(q)
     ))
   }, [search, travels])
 
@@ -109,14 +112,31 @@ export default function Travels() {
                 <Plane size={16} className="route-arrow" />
                 <span className="airport">{travel.to ?? '-'}</span>
               </div>
+              {(travel.return_from || travel.return_to) && (
+                <div className="travel-route travel-route-return">
+                  <span className="airport">{travel.return_from ?? travel.to ?? '-'}</span>
+                  <Plane size={14} className="route-arrow" />
+                  <span className="airport">{travel.return_to ?? travel.from ?? '-'}</span>
+                </div>
+              )}
+              {travel.title && <div className="travel-title">{travel.title}</div>}
               <div className="travel-dates">
-                <span>{formatDate(travel.depart_date)}</span>
-                {travel.return_date && <span> → {formatDate(travel.return_date)}</span>}
+                {travel.window_start && travel.window_end ? (
+                  <span>{formatDate(travel.window_start)} – {formatDate(travel.window_end)}</span>
+                ) : (
+                  <>
+                    <span>{formatDate(travel.depart_date)}</span>
+                    {travel.return_date && <span> → {formatDate(travel.return_date)}</span>}
+                  </>
+                )}
               </div>
               <div className="travel-meta">
                 <span>{travel.cabin_class ?? 'ECONOMY'}</span>
                 <span>{travel.passengers ?? 1} pax</span>
-                <span>{travel.max_stops === 'ANY' ? 'Qualquer escala' : `Máx ${travel.max_stops} escala(s)`}</span>
+                {travel.duration_min_days && travel.duration_max_days && (
+                  <span>{travel.duration_min_days}–{travel.duration_max_days} dias</span>
+                )}
+                <span>{travel.monitor_enabled ? 'Monitor on' : 'Monitor off'}</span>
               </div>
               <div className="travel-actions" onClick={e => e.stopPropagation()}>
                 <button className="btn-icon" onClick={() => handleEdit(travel)} title="Editar">

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Clock, ArrowRight, ChevronDown, ChevronUp } from 'lucide-react'
 import type { FlightResult, FlightLeg } from '../types'
+import { airportLabel } from '../lib/airportLabel'
 
 interface Props {
   result: FlightResult
@@ -55,9 +56,9 @@ function FlightSection({
             <div key={i} className="leg">
               <span className="leg-airline">{leg.airline} {leg.flight_number}</span>
               <div className="leg-route">
-                <span>{leg.departure_airport.split(' ')[0]}</span>
+                <span>{airportLabel(leg.departure_airport)}</span>
                 <ArrowRight size={12} />
-                <span>{leg.arrival_airport.split(' ')[0]}</span>
+                <span>{airportLabel(leg.arrival_airport)}</span>
               </div>
               <span className="leg-time">
                 {formatDT(leg.departure_datetime)} → {formatDT(leg.arrival_datetime)}
@@ -84,7 +85,10 @@ export default function FlightResultCard({ result, formatDuration }: Props) {
           Pesquisado em {new Date(result.searched_at).toLocaleString('pt-BR')}
         </span>
         <span className="result-total">
-          Total: {totalPrice.toLocaleString('pt-BR', { style: 'currency', currency })}
+          Total: {(result.total_price ?? totalPrice).toLocaleString('pt-BR', { style: 'currency', currency })}
+          {result.score != null && (
+            <span className="result-score"> · score {Number(result.score).toFixed(0)}</span>
+          )}
         </span>
       </div>
 
